@@ -1,4 +1,4 @@
-package com.ds.hibernate.entity;
+package com.ds.hibernate.app.one2many.mapping.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

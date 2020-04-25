@@ -1,4 +1,4 @@
-package com.ds.hibernate.app;
+package com.ds.hibernate.app.one2one.mapping;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,7 +7,7 @@ import org.hibernate.cfg.Configuration;
 import com.ds.hibernate.entity.Instructor;
 import com.ds.hibernate.entity.InstructorDetail;
 
-public class GetInstructorDetailDemo {
+public class DeleteDemo {
 
 	public static void main(String[] args) {
 
@@ -26,30 +26,30 @@ public class GetInstructorDetailDemo {
 			// start a transaction
 			session.beginTransaction();
 
-			// get the instructor detail object
-			int theId = 2999;
-			InstructorDetail tempInstructorDetail = 
-					session.get(InstructorDetail.class, theId);
+			// get instructor by primary key / id
+			int theId = 1;
+			Instructor tempInstructor = 
+					session.get(Instructor.class, theId);
 			
-			// print the instructor detail
-			System.out.println("tempInstructorDetail: " + tempInstructorDetail);
-						
-			// print  the associated instructor
-			System.out.println("the associated instructor: " + 
-								tempInstructorDetail.getInstructor());
+			System.out.println("Found instructor: " + tempInstructor);
+			
+			// delete the instructors
+			if (tempInstructor != null) {
+			
+				System.out.println("Deleting: " + tempInstructor);
+				
+				// Note: will ALSO delete associated "details" object
+				// because of CascadeType.ALL
+				//
+				session.delete(tempInstructor);				
+			}
 			
 			// commit transaction
 			session.getTransaction().commit();
 			
 			System.out.println("Done!");
 		}
-		catch (Exception exc) {
-			exc.printStackTrace();
-		}
 		finally {
-			// handle connection leak issue
-			session.close();
-			
 			factory.close();
 		}
 	}

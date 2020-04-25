@@ -1,11 +1,12 @@
-package com.ds.hibernate.app;
+package com.ds.hibernate.eagervslazy;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import com.ds.hibernate.entity.Instructor;
-import com.ds.hibernate.entity.InstructorDetail;
+import com.ds.hibernate.eagervslazy.entity.Course;
+import com.ds.hibernate.eagervslazy.entity.Instructor;
+import com.ds.hibernate.eagervslazy.entity.InstructorDetail;
 
 public class DeleteDemo {
 
@@ -13,10 +14,11 @@ public class DeleteDemo {
 
 		// create session factory
 		SessionFactory factory = new Configuration()
-								.configure("hibernate.cfg.xml")
-								.addAnnotatedClass(Instructor.class)
-								.addAnnotatedClass(InstructorDetail.class)
-								.buildSessionFactory();
+				.configure("hibernate_one2many.cfg2.xml")
+				.addAnnotatedClass(Instructor.class)
+				.addAnnotatedClass(InstructorDetail.class)
+				.addAnnotatedClass(Course.class)
+				.buildSessionFactory();
 		
 		// create session
 		Session session = factory.getCurrentSession();

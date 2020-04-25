@@ -1,4 +1,4 @@
-package com.ds.hibernate.app;
+package com.ds.hibernate.app.one2one.mapping;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -6,8 +6,9 @@ import org.hibernate.cfg.Configuration;
 
 import com.ds.hibernate.entity.Instructor;
 import com.ds.hibernate.entity.InstructorDetail;
+import com.ds.hibernate.entity.InstructorDetailBiDirectional;
 
-public class One2OneMappingDeleteDemoApp {
+public class BiDirectionMappingDemoApp {
 	public static void main(String[] args) {
 		// create session factory
 		SessionFactory factory = new Configuration()
@@ -20,24 +21,19 @@ public class One2OneMappingDeleteDemoApp {
 		Session session = factory.getCurrentSession();
 
 		try {			
-			int id =1;
+			
+		
 			
 			// start a transaction
 			session.beginTransaction();
-			
-			Instructor instructor = session.get(Instructor.class, id);
-					
 
-//			****************************************
-//			Note: this will ALSO Delete the details Object
-//			because of CascadeType ALL
-//			***************************
+			int id = 5;
+			InstructorDetail instructorDetailBiDirectional = session.get(InstructorDetail.class,id);
 			
-			if (instructor != null) {
-				session.delete(instructor);
-			}
-// commit transaction
-
+			System.out.println("instructorDetail= " + instructorDetailBiDirectional);
+			
+			System.out.println("Instructor= " + instructorDetailBiDirectional.getInstructor());
+			// commit transaction
 			session.getTransaction().commit();
 
 			System.out.println("Done!");

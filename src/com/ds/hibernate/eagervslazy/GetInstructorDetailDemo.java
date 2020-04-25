@@ -1,19 +1,19 @@
-package com.ds.hibernate.app;
+package com.ds.hibernate.eagervslazy;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import com.ds.hibernate.entity.Instructor;
-import com.ds.hibernate.entity.InstructorDetail;
+import com.ds.hibernate.eagervslazy.entity.Instructor;
+import com.ds.hibernate.eagervslazy.entity.InstructorDetail;
 
-public class DeleteInstructorDetailDemo {
+public class GetInstructorDetailDemo {
 
 	public static void main(String[] args) {
 
 		// create session factory
 		SessionFactory factory = new Configuration()
-								.configure("hibernate.cfg.xml")
+								.configure("hibernate_one2many.cfg2.xml")
 								.addAnnotatedClass(Instructor.class)
 								.addAnnotatedClass(InstructorDetail.class)
 								.buildSessionFactory();
@@ -27,7 +27,7 @@ public class DeleteInstructorDetailDemo {
 			session.beginTransaction();
 
 			// get the instructor detail object
-			int theId = 3;
+			int theId = 2999;
 			InstructorDetail tempInstructorDetail = 
 					session.get(InstructorDetail.class, theId);
 			
@@ -37,19 +37,6 @@ public class DeleteInstructorDetailDemo {
 			// print  the associated instructor
 			System.out.println("the associated instructor: " + 
 								tempInstructorDetail.getInstructor());
-			
-			// now let's delete the instructor detail
-			System.out.println("Deleting tempInstructorDetail: " 
-											+ tempInstructorDetail);
-
-//			***************************************************
-			// remove the associated object reference
-			// break bi-directional link
-			//**************************************************
-			
-			tempInstructorDetail.getInstructor().setInstructorDetail(null);
-			
-			session.delete(tempInstructorDetail);
 			
 			// commit transaction
 			session.getTransaction().commit();
